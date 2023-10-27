@@ -1,0 +1,16 @@
+import grpc
+import sensorservice_pb2
+import sensorservice_pb2_grpc
+
+def run():
+    channel = grpc.insecure_channel('sensor_service:50051')
+    client = sensorservice_pb2_grpc.SensorServiceStub(channel)
+    
+    sensor_id = "Sensor001"  # ID датчика
+    request = sensorservice_pb2.GetSensorDataRequest(sensor_id=sensor_id)
+    
+    response = client.GetData(request)
+    print("Received response from SensorService:", response.data)
+
+if __name__ == '__main__':
+    run()

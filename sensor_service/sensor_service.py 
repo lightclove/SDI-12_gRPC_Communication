@@ -1,0 +1,21 @@
+import grpc
+from concurrent import futures
+import sensorservice_pb2
+import sensorservice_pb2_grpc
+
+class SensorService(sensorservice_pb2_grpc.SensorServiceServicer):
+    def GetData(self, request, context):
+        # логику для получения данных от датчика
+
+        response = sensorservice_pb2.SensorDataResponse(data="Sensor data for sensor " + request.sensor_id)
+        return response
+
+def serve():
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    sensorservice_pb2_grpc.add_SensorServiceServicer_to_server(SensorService(), server)
+    server.add_insecure_port('[::]:50051')
+    server.start()
+    server.wait_for_termination()
+
+if __name__ == '__main__':
+    serve()

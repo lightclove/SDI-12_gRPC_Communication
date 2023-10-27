@@ -1,0 +1,17 @@
+version: '3'
+services:
+  sdi12_sensor_1:
+    build:
+      context: ./sdi12_sensor_1
+    ports:
+      - "5001:80"
+    volumes:
+      - ./sdi12_sensor_1:/app
+
+  sdi12_sensor_2:
+    build:
+      context: ./sdi12_sensor_2
+    ports:
+      - "5002:80"
+    volumes:
+      - ./sdi12_sensor_2:/app
